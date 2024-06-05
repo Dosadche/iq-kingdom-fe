@@ -1,0 +1,19 @@
+@import '../../../../assets/styles/common';
+
+.sign-up {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    &__card {
+        width: 400px;
+
+        &__buttons {
+            margin-top: $big;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@import '../../../../assets/styles/common';
+
+.card {
+    border-radius: $medium;
+    background: $background;
+    border: 2px solid white;
+    padding: $big;
+    box-shadow: $bigShadow;
+
+    &__title {
+        margin-bottom: $big;
+    }
+}

@@ -1,0 +1,29 @@
+@import './color-variables';
+@import './size-variables';
+
+
+button {
+    background: none;
+    border: none;
+    padding: 0 16px;
+    border-radius: 8px;
+    height: 40px;
+    font-weight: 500;
+    box-shadow: $smallShadow;
+    transition: all 0.15s;
+    cursor: pointer;
+
+    &:active {
+        box-shadow: none;
+    }
+}
+
+.simple-btn {
+    background: $background;
+    color: $fontColor;
+}
+
+.primary-btn {
+    background: #8BB5F7;
+    color: white;
+}

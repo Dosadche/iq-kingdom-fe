@@ -1,0 +1,17 @@
+@import '../../../../assets/styles/common';
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+    margin-bottom: $medium;
+
+    &__control {
+        background: $background;
+        border-radius: $small;
+        border: 2px solid white;
+        height: 42px;
+        padding: 0 $medium;
+        box-shadow: $smallShadow;
+    }
+}
