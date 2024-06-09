@@ -1,0 +1,43 @@
+@import 'common';
+
+.info {
+    &__header {
+        display: flex;
+        gap: $medium;
+        align-items: center;
+
+        &__name {
+            font-size: 20px;
+            font-weight: 600;
+            width: 100px;
+        }
+    }
+
+    &__content {
+        margin-top: $big;
+        display: flex;
+        flex-direction: column;
+        gap: $small 0;
+
+        &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 18px;
+
+            &__left {
+                display: flex;
+                gap: 0 $small;
+            }
+
+            &__value {
+                font-weight: 600;
+            }
+        }
+    }
+
+    &__after-words {
+        margin-top: $big;
+        text-align: center;
+    }
+}

@@ -9,12 +9,14 @@
                 label="Password"
             ></app-input-field>
             <div class="sign-in__card__buttons">
-                <button 
+                <button
                     routerLink="../sign-up"
                     class="simple-btn">
                     Sign Up
                 </button>
-                <button class="primary-btn">
+                <button 
+                    (click)="navigateToDashboard()"
+                    class="primary-btn">
                     Log In
                 </button>
             </div>

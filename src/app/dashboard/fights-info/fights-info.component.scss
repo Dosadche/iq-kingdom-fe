@@ -1,0 +1,45 @@
+@import 'common';
+
+.fights-list {
+    display: flex;
+    flex-direction: column;
+    gap: $medium 0;
+
+    &__item {
+        background: $background;
+        box-shadow: $smallShadow;
+        border-radius: $small;
+        padding: $small;
+        display: flex;
+        align-items: center;
+        gap: 0 $small;
+
+
+        &__icon {
+            display: flex;
+            padding: $small;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            border-radius: 50%;
+
+            &--defeat, &--pending {
+                background: $primary;
+            }
+
+            &--victory {
+                background: $additional;
+            }
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        &__content__title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+    }
+}

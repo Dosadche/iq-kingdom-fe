@@ -1,0 +1,14 @@
+@import 'common';
+
+.layout {
+    padding: $big;
+    display: flex;
+    gap: $big;
+
+    &__right {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: $big;
+    }
+}
