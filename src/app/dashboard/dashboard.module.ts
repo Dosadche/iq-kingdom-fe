@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { LayoutComponent } from './layout/layout.component';
-import { UserInfoCardComponent } from './user-info-card/user-info-card.component';
 import { SharedModule } from '../shared/shared.module';
-import { FightsInfoComponent } from './fights-info/fights-info.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { FightsInfoComponent } from './components/fights-info/fights-info.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { UserInfoCardComponent } from './components/user-info-card/user-info-card.component';
+import { UsersComponent } from './components/users/users.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     LayoutComponent,
     UserInfoCardComponent,
     FightsInfoComponent,
-    NavBarComponent
+    NavBarComponent,
+    UsersComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,

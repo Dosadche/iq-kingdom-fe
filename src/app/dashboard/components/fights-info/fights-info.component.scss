@@ -1,9 +1,17 @@
 @import 'common';
 
+app-card {
+    ::ng-deep .card {
+        height: 100%;
+    }
+}
+
 .fights-list {
     display: flex;
     flex-direction: column;
     gap: $medium 0;
+    max-height: calc(100vh - 226px - $big * 7);
+    overflow-y: auto;
 
     &__item {
         background: $background;

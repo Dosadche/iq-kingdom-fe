@@ -1,0 +1,27 @@
+@import 'common';
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $big;
+
+    &__list {
+        display: flex;
+        gap: $big;
+
+        &__item {
+            font-weight: 500;
+            font-size: $big;
+
+            &--active {
+                color: $primaryDarker;
+            }
+        }
+    }
+
+    &__logo {
+        color: $primaryDarker;
+        font-size: 28px;
+        letter-spacing: 0.5px;
+    }
+}
