@@ -1,0 +1,42 @@
+@import 'common';
+
+.modal {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: rgba(92, 92, 92, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__content {
+        border: 2px solid white;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+        padding: $big;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $medium;
+        width: 300px;
+
+        &__answer {
+            background: rgba(255, 255, 255, 0.5);
+            width: 100%;
+
+            &--selected {
+                background-color: $additionalDarker;
+                color: white;
+            }
+        }
+        
+        &__footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
