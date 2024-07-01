@@ -1,0 +1,22 @@
+@import 'common';
+
+.layout {
+    padding: $big;
+    display: flex;
+    gap: $big;
+
+    &__left {
+        width: 400px;
+        min-width: 400px;
+        display: grid;
+        grid-template-rows: 226px calc(100vh - 226px - $big * 5);
+        gap: $big;
+    }
+
+    &__right {
+        width: 100%;
+        display: grid;
+        grid-template-rows: 33px calc(100vh - 33px - $big * 5);
+        gap: $big;
+    }
+}

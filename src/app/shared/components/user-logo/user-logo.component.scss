@@ -1,0 +1,28 @@
+@import 'common';
+
+.logo {
+    padding: 16px;
+    display: flex;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    &.green {
+        background-color: $additional;
+    }
+
+    &.blue {
+        background-color: $primary;
+    }
+
+    &.purple {
+        background-color: $secondary;
+    }
+
+    h2 {
+        font-weight: 400;
+    }
+}

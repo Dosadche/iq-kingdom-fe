@@ -1,0 +1,40 @@
+<app-card>
+    <div class="info">
+        <div class="info__header">
+            <app-user-logo
+                name="Dmytro Osadchyi"
+                color="purple"
+            ></app-user-logo>
+            <p class="info__header__name">
+                Dmytro Osadchyi
+            </p>
+        </div>
+        <div class="info__content">
+            <div class="info__content__row">
+                <div class="info__content__row__left">
+                    <img 
+                        src="./assets/images/heart.svg" 
+                        alt="Heart Icon">
+                    Health Points
+                </div>
+                <p class="info__content__row__value">
+                    {{ 5 }}
+                </p>
+            </div>
+            <div class="info__content__row">
+                <div class="info__content__row__left">
+                    <img 
+                        src="./assets/images/arrow-down.svg" 
+                        alt="Arrow Icon">
+                    Score
+                </div>
+                <p class="info__content__row__value">
+                    {{ 1050 }}
+                </p>
+            </div>
+        </div>
+        <p class="info__after-words">
+            Keep on, Dmytro, you are doing great!
+        </p>
+    </div>
+</app-card>

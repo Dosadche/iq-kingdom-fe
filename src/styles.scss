@@ -1,7 +1,28 @@
 @import './normalize.css';
-@import './assets/styles/color-variables.scss';
+@import './assets/styles/color-variables';
 
 body {
     font-family: 'Roboto', sans-serif;
-    color: $fontColor!important;
+    color: $fontColor !important;
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #88888884;
+        border-radius: 4px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #888888af;
+    }
 }
