@@ -12,114 +12,19 @@
         <div class="users__table__container">
             <table class="users__table">
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let user of users">
                         <td class="user-cell">
                             <div class="user-cell__container">
                                 <app-user-logo
-                                    name="Valeriia Levchuk"
+                                    [name]="user.name"
                                     color="blue"
                                 ></app-user-logo>
-                                <span>Valeriia Levchuck</span>
+                                <span>{{ user.name }}</span>
                             </div>
                         </td>
                         <td>Expert</td>
-                        <td>10040 XP</td>
-                        <td>5 HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    name="Dmytro Osadchyi"
-                                    color="purple"
-                                ></app-user-logo>
-                                <span>Dmytro Osadchyi</span>
-                            </div>
-                        </td>
-                        <td>Expert</td>
-                        <td>10040 XP</td>
-                        <td>5 HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    name="Andriy Levchuk"
-                                    color="green"
-                                ></app-user-logo>
-                                <span>Andriy Levchuck</span>
-                            </div>
-                        </td>
-                        <td>Beginner</td>
-                        <td>1040 XP</td>
-                        <td>3 HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    name="John Doe"
-                                    color="purple"
-                                ></app-user-logo>
-                                <span>John Doe</span>
-                            </div>
-                        </td>
-                        <td>Expert</td>
-                        <td>10040 XP</td>
-                        <td>5 HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    name="Valeriia Levchuk"
-                                    color="blue"
-                                ></app-user-logo>
-                                <span>Valeriia Levchuck</span>
-                            </div>
-                        </td>
-                        <td>Expert</td>
-                        <td>10040 XP</td>
-                        <td>5 HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    name="Dmytro Osadchyi"
-                                    color="purple"
-                                ></app-user-logo>
-                                <span>Dmytro Osadchyi</span>
-                            </div>
-                        </td>
-                        <td>Expert</td>
-                        <td>10040 XP</td>
-                        <td>5 HP</td>
+                        <td>{{ user.xp }} XP</td>
+                        <td>{{ user.hp }} HP</td>
                         <td class="action-cell">
                             <button 
                                 (click)="fightModal.toggleModal()"

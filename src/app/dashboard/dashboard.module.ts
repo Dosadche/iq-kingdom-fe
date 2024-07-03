@@ -9,6 +9,10 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { UserInfoCardComponent } from './components/user-info-card/user-info-card.component';
 import { UsersComponent } from './components/users/users.component';
+import { StoreModule } from '@ngrx/store';
+import { usersReducer } from './state/users/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffect } from './state/users/user.effect';
 
 
 @NgModule({
@@ -24,6 +28,8 @@ import { UsersComponent } from './components/users/users.component';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
+    StoreModule.forFeature('users', usersReducer),
+    EffectsModule.forFeature(UserEffect),
   ]
 })
 export class DashboardModule { }
