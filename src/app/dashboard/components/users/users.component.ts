@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/core/models/user.model';
 import * as usersActions from '../../state/users/user.action';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../state/users/user.reducer';
+import { select, Store } from '@ngrx/store';
+import * as fromUsers from '../../state/users/user.reducer';
+import { map, Observable, tap } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -12,9 +13,10 @@ import { AppState } from '../../state/users/user.reducer';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  users: User[] = [];
+  users!: Observable<User[]>;
+  isLoading!: Observable<boolean>;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store<fromUsers.AppState>) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -26,9 +28,7 @@ export class UsersComponent implements OnInit {
   }
 
   private subscribeOnStore(): void {
-    this.store.pipe(untilDestroyed(this))
-      .subscribe((state: Partial<AppState>) => {
-        this.users = state.users!!.users;
-      });
+    this.isLoading = this.store.pipe(select(fromUsers.getUsersLoading));
+    this.users = this.store.pipe(select(fromUsers.getUsers));
   }
 }

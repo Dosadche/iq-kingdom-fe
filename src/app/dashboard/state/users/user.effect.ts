@@ -4,6 +4,7 @@ import { UsersRestService } from "src/app/core/services/rest/users-rest.service"
 import * as userActions from "./user.action";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { User } from "src/app/core/models/user.model";
+import { error } from "console";
 
 @Injectable()
 export class UserEffect {

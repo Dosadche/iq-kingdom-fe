@@ -10,29 +10,33 @@
             </div>
         </div>
         <div class="users__table__container">
-            <table class="users__table">
-                <tbody>
-                    <tr *ngFor="let user of users">
-                        <td class="user-cell">
-                            <div class="user-cell__container">
-                                <app-user-logo
-                                    [name]="user.name"
-                                    color="blue"
-                                ></app-user-logo>
-                                <span>{{ user.name }}</span>
-                            </div>
-                        </td>
-                        <td>Expert</td>
-                        <td>{{ user.xp }} XP</td>
-                        <td>{{ user.hp }} HP</td>
-                        <td class="action-cell">
-                            <button 
-                                (click)="fightModal.toggleModal()"
-                                class="primary-btn">Attack!</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <app-spinner *ngIf="isLoading | async; else usersContent"></app-spinner>
+            <ng-template #usersContent>
+                <table 
+                    class="users__table">
+                    <tbody>
+                        <tr *ngFor="let user of users | async">
+                            <td class="user-cell">
+                                <div class="user-cell__container">
+                                    <app-user-logo
+                                        [name]="user.name"
+                                        color="blue"
+                                    ></app-user-logo>
+                                    <span>{{ user.name }}</span>
+                                </div>
+                            </td>
+                            <td>Expert</td>
+                            <td>{{ user.xp }} XP</td>
+                            <td>{{ user.hp }} HP</td>
+                            <td class="action-cell">
+                                <button 
+                                    (click)="fightModal.toggleModal()"
+                                    class="primary-btn">Attack!</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
         </div>
     </div>
 </app-card>

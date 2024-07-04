@@ -1,6 +1,7 @@
 import * as usersActions from './user.action';
 import { User } from '../../../core/models/user.model';
 import * as fromRoot from '../../../state/app-state.state';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface UsersState {
     users: User[],
@@ -46,3 +47,26 @@ export function usersReducer(state = initialState, action: usersActions.UserActi
             return state;
     }
 }
+
+const getUsersFeatureState = createFeatureSelector<UsersState>('users');
+
+export const getUsers = createSelector(
+    getUsersFeatureState,
+    (state: UsersState) => state.users
+);
+
+export const getUsersLoading = createSelector(
+    getUsersFeatureState,
+    (state: UsersState) => state.loading
+);
+
+export const getUsersLoaded = createSelector(
+    getUsersFeatureState,
+    (state: UsersState) => state.loaded
+);
+
+export const getUsersFail = createSelector(
+    getUsersFeatureState,
+    (state: UsersState) => state.error
+);
+

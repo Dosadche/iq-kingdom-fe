@@ -1,0 +1,8 @@
+<div 
+    *ngIf="errorService.error as errorMessage" 
+    (click)="removeError()"
+    class="toaster">
+    <p class="toaster__message">
+        {{ errorMessage }}
+    </p>
+</div>
