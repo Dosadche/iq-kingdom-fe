@@ -5,12 +5,17 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
 import { UserLogoComponent } from './components/user-logo/user-logo.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ModalComponent } from './components/fight-modal/fight-modal.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const components = [
   CardComponent,
   InputFieldComponent,
   UserLogoComponent,
   ModalComponent,
+  SpinnerComponent,
+  ToasterComponent
 ]
 
 const pipes = [
@@ -23,7 +28,8 @@ const pipes = [
     ...pipes,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ...components,

@@ -1,19 +1,62 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/shared/services/error.service';
+import * as fromAuth from '../../state/auth.reducer';
+import * as authActions from '../../state/auth.action';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+  signInForm!: FormGroup;
+  isLoading!: Observable<boolean>;
 
-  constructor(private router: Router) { }
+  constructor(private store: Store<fromAuth.AppState>,
+              private router: Router,
+              private fb: FormBuilder,
+              private errorService: ErrorService) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.subscribeOnStore();
   }
 
-  navigateToDashboard(): void {
+  handleLogin(): void {
+    if (this.signInForm.invalid) {
+      this.errorService.error = 'Please ensure all fields are filled correctly';
+      return;
+    }
+    this.store.dispatch(new authActions.Login(this.signInForm.value));
+  }
+
+  private initForm(): void {
+    this.signInForm = this.fb.group({
+      email: [null, Validators.required],
+      password: [null, Validators.required],
+    });
+  }
+
+  private subscribeOnStore(): void {
+    this.isLoading = this.store.pipe(select(fromAuth.getAuthLoading));
+    this.store
+      .pipe(
+        select(fromAuth.getIsSignedIn),
+        untilDestroyed(this))
+      .subscribe((isSignedIn: boolean) => {
+        if (isSignedIn) {
+          this.navigateToDashboard();
+        }
+      });
+  }
+
+  private navigateToDashboard(): void {
     this.router.navigate(['/dashboard']);
   }
 }

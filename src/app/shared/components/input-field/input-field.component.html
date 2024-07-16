@@ -1,11 +1,14 @@
-<div class="input">
+<form
+    [formGroup]="form"
+    class="input">
     <label 
         class="input__label"
         for="input">
         {{ label }}
     </label>
     <input 
+        [formControlName]="controlName"
         class="input__control"
         id="input" 
-        type="text">
-</div>
+        [type]="isPassword ? 'password' : 'text'">
+</form>
