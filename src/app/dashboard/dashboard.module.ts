@@ -13,6 +13,8 @@ import { StoreModule } from '@ngrx/store';
 import { usersReducer } from './state/users/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffect } from './state/users/user.effect';
+import { authReducer } from '../auth/state/auth.reducer';
+import { AuthEffect } from '../auth/state/auth.effect';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { UserEffect } from './state/users/user.effect';
     SharedModule,
     StoreModule.forFeature('users', usersReducer),
     EffectsModule.forFeature(UserEffect),
+    StoreModule.forFeature('auth', authReducer),
+    EffectsModule.forFeature(AuthEffect),
   ]
 })
 export class DashboardModule { }

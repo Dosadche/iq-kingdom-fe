@@ -1,6 +1,9 @@
 <section class="layout">
     <div class="layout__left">
         <app-user-info-card
+            *ngIf="user | async as user"
+            [user]="user"
+            (onLogout)="handleLogout()"
         ></app-user-info-card>
         <app-fights-info
         ></app-fights-info>

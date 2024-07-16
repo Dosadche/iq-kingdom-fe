@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { User } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-user-info-card',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-info-card.component.scss']
 })
 export class UserInfoCardComponent implements OnInit {
-
+  @Output() onLogout = new EventEmitter<void>();
+  @Input() user!: User | null;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  handleLogout(): void {
+    this.onLogout.emit();
+  }
 }

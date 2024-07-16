@@ -7,6 +7,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { ModalComponent } from './components/fight-modal/fight-modal.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const components = [
   CardComponent,
@@ -27,7 +28,8 @@ const pipes = [
     ...pipes,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ...components,
