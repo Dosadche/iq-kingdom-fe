@@ -1,5 +1,5 @@
 import * as usersActions from './user.action';
-import { User } from '../../../core/models/user.model';
+import { User } from '../../../shared/models/user.model';
 import * as fromRoot from '../../../state/app-state.state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 

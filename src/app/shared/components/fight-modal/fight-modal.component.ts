@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { QUESTIONS } from '../../consts/test-questions.const';
+import { select, Store } from '@ngrx/store';
+import * as fromQuestions from '../../../dashboard/state/questions/question.reducer';
+import * as questionsActions from '../../../dashboard/state/questions/question.action';
+import { Question } from '../../models/question.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'app-fight-modal',
   templateUrl: './fight-modal.component.html',
@@ -8,17 +14,22 @@ import { QUESTIONS } from '../../consts/test-questions.const';
 })
 export class ModalComponent implements OnInit {
   isModalVisible: boolean = false;
-  QUESTIONS = QUESTIONS;
-  activeQuestionIndex = 0
-  activeQuestion = QUESTIONS[this.activeQuestionIndex];
+  questions!: Question[];
+  activeQuestionIndex = 0;
+  activeQuestion!: Question;
+  isLoading!: Observable<boolean>;
 
-  constructor() { }
+  constructor(private store: Store<fromQuestions.AppState>) { }
 
   ngOnInit(): void {
+    this.subscribeOnStore();
   }
 
   toggleModal(): void {
     this.isModalVisible = !this.isModalVisible;
+    if (this.isModalVisible) {
+      this.getQuestions();
+    }
   }
 
   selectAnswer(index: number): void {
@@ -28,6 +39,23 @@ export class ModalComponent implements OnInit {
 
   nextQuestion(): void {
     this.activeQuestionIndex = this.activeQuestionIndex + 1;
-    this.activeQuestion = this.QUESTIONS[this.activeQuestionIndex];
+    this.activeQuestion = this.questions[this.activeQuestionIndex];
+  }
+
+  private getQuestions(): void {
+    this.store.dispatch(new questionsActions.LoadQuestions());
+  }
+
+  private subscribeOnStore(): void {
+    this.isLoading = this.store.pipe(select(fromQuestions.getQuestionsLoading));
+    this.store
+      .pipe(
+        select(fromQuestions.getQuestions),
+        untilDestroyed(this))
+      .subscribe((questions: Question[]) => {
+        this.questions = questions;
+        this.activeQuestionIndex = 0;
+        this.activeQuestion = this.questions[this.activeQuestionIndex];
+      });
   }
 }

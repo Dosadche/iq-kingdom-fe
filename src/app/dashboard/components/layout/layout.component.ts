@@ -4,7 +4,7 @@ import * as authActions from '../../../auth/state/auth.action';
 import * as fromAuth from '../../../auth/state/auth.reducer';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
-import { User } from 'src/app/core/models/user.model';
+import { User } from 'src/app/shared/models/user.model';
 import { Observable, tap } from 'rxjs';
 
 @UntilDestroy()

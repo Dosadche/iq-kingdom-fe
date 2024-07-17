@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
-import { LoginCredentials, RegisterCredentials } from "src/app/core/models/auth-credentials.model";
-import { User } from "src/app/core/models/user.model";
+import { LoginCredentials, RegisterCredentials } from "src/app/shared/models/auth-credentials.model";
+import { User } from "src/app/shared/models/user.model";
 
 export enum AuthActionTypes {
     AUTHENTICATE = '[Auth] Authenticate',

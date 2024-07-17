@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageKeys, StorageService } from '../services/storage.service';
 import { Store } from '@ngrx/store';
 import * as authActions from '../../auth/state/auth.action';
-import { User } from '../models/user.model';
+import { User } from '../../shared/models/user.model';
 import { Router } from '@angular/router';
 
 @Injectable({

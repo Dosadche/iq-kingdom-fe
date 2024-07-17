@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LoginCredentials, RegisterCredentials } from '../../models/auth-credentials.model';
+import { LoginCredentials, RegisterCredentials } from '../../../shared/models/auth-credentials.model';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user.model';
+import { User } from '../../../shared/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 

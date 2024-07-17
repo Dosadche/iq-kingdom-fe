@@ -1,4 +1,4 @@
-import { User } from "src/app/core/models/user.model";
+import { User } from "src/app/shared/models/user.model";
 import * as fromRoot from '../../state/app-state.state';
 import * as authActions from '../state/auth.action';
 import { createFeatureSelector, createSelector } from "@ngrx/store";

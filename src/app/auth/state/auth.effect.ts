@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as authActions from './auth.action';
 import { catchError, map, mergeMap, of } from "rxjs";
 import { AuthRestService } from "src/app/core/services/rest/auth.service";
-import { User } from "src/app/core/models/user.model";
+import { User } from "src/app/shared/models/user.model";
 import { StorageKeys, StorageService } from "src/app/core/services/storage.service";
 
 @Injectable()

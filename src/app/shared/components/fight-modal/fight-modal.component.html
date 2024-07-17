@@ -5,30 +5,33 @@
     <div 
         (click)="$event.stopPropagation()"
         class="modal__content">
-        <h2 class="modal__content__title">
-            Fight!
-        </h2>
-        <p class="modal__content__question">
-            {{ activeQuestion.title }}
-        </p>
-        <button 
-            *ngFor="let answer of activeQuestion.answers; let index = index" 
-            [class.modal__content__answer--selected]="answer.selected"
-            (click)="selectAnswer(index)"
-            class="modal__content__answer simple-btn">
-            {{ answer.title }}
-        </button>
-        <div class="modal__content__footer">
-            <button
-                (click)="toggleModal()" 
-                class="simple-btn">
-                Give Up
+        <app-spinner *ngIf="isLoading | async; else content"></app-spinner>
+        <ng-template #content>
+            <h2 class="modal__content__title">
+                Fight!
+            </h2>
+            <p class="modal__content__question">
+                {{ activeQuestion.title }}
+            </p>
+            <button 
+                *ngFor="let answer of activeQuestion.answers; let index = index" 
+                [class.modal__content__answer--selected]="answer.selected"
+                (click)="selectAnswer(index)"
+                class="modal__content__answer simple-btn">
+                {{ answer.title }}
             </button>
-            <button
-                (click)="nextQuestion()" 
-                class="primary-btn">
-                Next
-            </button>
-        </div>
+            <div class="modal__content__footer">
+                <button
+                    (click)="toggleModal()" 
+                    class="simple-btn">
+                    Give Up
+                </button>
+                <button
+                    (click)="nextQuestion()" 
+                    class="primary-btn">
+                    Next
+                </button>
+            </div>
+        </ng-template>
     </div>
 </div>
