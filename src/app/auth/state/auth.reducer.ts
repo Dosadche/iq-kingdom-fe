@@ -25,7 +25,9 @@ export const initialState: AuthState = {
 
 export function authReducer(state = initialState, action: authActions.AuthAction): AuthState {
     switch (action.type) {
+        case authActions.AuthActionTypes.LOGIN:
         case authActions.AuthActionTypes.AUTHENTICATE:
+        case authActions.AuthActionTypes.LOGOUT:
             return {
                 ...state,
                 loading: true,
@@ -37,18 +39,6 @@ export function authReducer(state = initialState, action: authActions.AuthAction
                 loaded: true,
                 loading: false,
             };
-        case authActions.AuthActionTypes.AUTHENTICAION_FAIL:
-            return {
-                ...state,
-                error: action.payload,
-                loaded: false,
-                loading: false,
-            };
-        case authActions.AuthActionTypes.LOGIN:
-            return {
-                ...state,
-                loading: true,
-            };
         case authActions.AuthActionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
@@ -57,20 +47,10 @@ export function authReducer(state = initialState, action: authActions.AuthAction
                 loaded: true,
                 loading: false,
             };
-        case authActions.AuthActionTypes.LOGIN_FAIL:
-            return {
-                ...state,
-                error: action.payload,
-                loaded: false,
-                loading: false,
-            };
-        case authActions.AuthActionTypes.LOGOUT:
-            return {
-                ...state,
-                loading: true,
-            };
         case authActions.AuthActionTypes.LOGOUT_SUCCESS:
             return initialState;
+        case authActions.AuthActionTypes.AUTHENTICAION_FAIL:
+        case authActions.AuthActionTypes.LOGIN_FAIL:
         case authActions.AuthActionTypes.LOGIN_FAIL:
             return {
                 ...state,

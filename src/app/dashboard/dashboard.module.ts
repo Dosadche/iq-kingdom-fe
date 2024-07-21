@@ -17,6 +17,8 @@ import { authReducer } from '../auth/state/auth.reducer';
 import { AuthEffect } from '../auth/state/auth.effect';
 import { questionReducer } from './state/questions/question.reducer';
 import { QuestionEffect } from './state/questions/question.effect';
+import { fightsReducer } from './state/fights/fight.reducer';
+import { FightEffect } from './state/fights/fight.effect';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { QuestionEffect } from './state/questions/question.effect';
     EffectsModule.forFeature(AuthEffect),
     StoreModule.forFeature('questions', questionReducer),
     EffectsModule.forFeature(QuestionEffect),
+    StoreModule.forFeature('fights', fightsReducer),
+    EffectsModule.forFeature(FightEffect),
   ]
 })
 export class DashboardModule { }

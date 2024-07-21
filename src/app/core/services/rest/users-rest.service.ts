@@ -13,6 +13,10 @@ export class UsersRestService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.entityUrl}`);
+    return this.http.get<User[]>(this.entityUrl);
+  }
+
+  getById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.entityUrl}/${id}`);
   }
 }

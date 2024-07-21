@@ -5,7 +5,7 @@
     <div 
         (click)="$event.stopPropagation()"
         class="modal__content">
-        <app-spinner *ngIf="isLoading | async; else content"></app-spinner>
+        <app-spinner *ngIf="(isLoading | async) || isFightLoading; else content"></app-spinner>
         <ng-template #content>
             <h2 class="modal__content__title">
                 Fight!
@@ -29,7 +29,7 @@
                 <button
                     (click)="nextQuestion()" 
                     class="primary-btn">
-                    Next
+                    {{ activeQuestionIndex >= questions.length - 1 ? 'Complete' : 'Next' }}
                 </button>
             </div>
         </ng-template>

@@ -4,7 +4,6 @@ import { UsersRestService } from "src/app/core/services/rest/users-rest.service"
 import * as userActions from "./user.action";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { User } from "src/app/shared/models/user.model";
-import { error } from "console";
 import { StorageKeys, StorageService } from "src/app/core/services/storage.service";
 
 @Injectable()
@@ -27,6 +26,19 @@ export class UserEffect {
                     }),
                     catchError((err) => {
                         return of(new userActions.LoadUsersFail(err.error.message))})
+                )
+            })
+        )
+    });
+
+    loadUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(userActions.UsersActionTypes.LOAD_USER),
+            mergeMap((action: userActions.LoadUser) => {
+                return this.usersRESTService.getById(action.payload.id).pipe(
+                    map((user: User) => new userActions.LoadUserSuccess({ user })),
+                    catchError((err) => {
+                        return of(new userActions.LoadUserFail(err.error.message))})
                 )
             })
         )

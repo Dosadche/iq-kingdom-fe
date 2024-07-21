@@ -22,6 +22,15 @@ app-card {
         align-items: center;
         gap: 0 $small;
 
+        &--defendable {
+            background-color: rgba($color: $error, $alpha: 0.9);
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $error;
+            }
+        }
 
         &__icon {
             display: flex;

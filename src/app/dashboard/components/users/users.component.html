@@ -30,7 +30,7 @@
                             <td>{{ user.hp }} HP</td>
                             <td class="action-cell">
                                 <button 
-                                    (click)="fightModal.toggleModal()"
+                                    (click)="fightModal.startAttack(user.id)"
                                     class="primary-btn">Attack!</button>
                             </td>
                         </tr>

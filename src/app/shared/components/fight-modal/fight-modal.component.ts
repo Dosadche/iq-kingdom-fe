@@ -2,9 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as fromQuestions from '../../../dashboard/state/questions/question.reducer';
 import * as questionsActions from '../../../dashboard/state/questions/question.action';
+import * as fightActions from '../../../dashboard/state/fights/fight.action';
+import * as userActions from '../../../dashboard/state/users/user.action';
 import { Question } from '../../models/question.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
+import { finalize, Observable, take } from 'rxjs';
+import { FightsService } from 'src/app/core/services/fights.service';
+import { Fight } from '../../models/fight.model';
+import { FightsRestService } from 'src/app/core/services/rest/fights-rest.service';
+import { ErrorService } from '../../services/error.service';
+import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
 
 @UntilDestroy()
 @Component({
@@ -18,17 +25,38 @@ export class ModalComponent implements OnInit {
   activeQuestionIndex = 0;
   activeQuestion!: Question;
   isLoading!: Observable<boolean>;
+  isFightLoading: boolean = false;
+  defenderId?: string;
+  fightId?: string;
 
-  constructor(private store: Store<fromQuestions.AppState>) { }
+  constructor(private store: Store<fromQuestions.AppState>,
+              private fightsService: FightsService,
+              private fightsRESTService: FightsRestService,
+              private errorService: ErrorService,
+              private storageService: StorageService,
+  ) { }
 
   ngOnInit(): void {
     this.subscribeOnStore();
   }
 
-  toggleModal(): void {
-    this.isModalVisible = !this.isModalVisible;
+  startAttack(defenderId: string): void {
+    this.toggleModal();
     if (this.isModalVisible) {
+      this.defenderId = defenderId;
       this.getQuestions();
+    } else {
+      this.defenderId = undefined;
+    }
+  }
+
+  startDefence(fightId: string): void {
+    this.toggleModal();
+    if (this.isModalVisible) {
+      this.fightId = fightId;
+      this.getQuestions();
+    } else {
+      this.fightId = undefined;
     }
   }
 
@@ -38,6 +66,14 @@ export class ModalComponent implements OnInit {
   }
 
   nextQuestion(): void {
+    if (this.activeQuestionIndex >= this.questions.length - 1) {
+      const fight: Fight | null = this.fightsService
+        .mapQuestionsToFight(this.questions);
+      if (fight) {
+        this.endFight(fight);
+      }
+      return;
+    }
     this.activeQuestionIndex = this.activeQuestionIndex + 1;
     this.activeQuestion = this.questions[this.activeQuestionIndex];
   }
@@ -53,9 +89,38 @@ export class ModalComponent implements OnInit {
         select(fromQuestions.getQuestions),
         untilDestroyed(this))
       .subscribe((questions: Question[]) => {
-        this.questions = questions;
+        this.questions = JSON.parse(JSON.stringify(questions));
         this.activeQuestionIndex = 0;
         this.activeQuestion = this.questions[this.activeQuestionIndex];
       });
+  }
+
+  private endFight(fight: Fight): void {
+    let request$: Observable<Fight>;
+    if (this.defenderId) {
+      request$ = this.fightsRESTService.attack(fight, this.defenderId);
+    } else if (this.fightId) {
+      const correctAnswersAmount = this.fightsService.countCorrectAnswers(this.questions);
+      request$ = this.fightsRESTService.defend(this.fightId, correctAnswersAmount);
+    } else {
+      this.errorService.error = 'Something went wrong';
+      return;
+    }
+    this.isFightLoading = true;
+    request$
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.isFightLoading = false;
+          this.toggleModal();
+        })).subscribe(() => {
+          const currentUserId = this.storageService.getItem(StorageKeys.User).id;
+          this.store.dispatch(new userActions.LoadUser({ id: currentUserId }));
+          this.store.dispatch(new fightActions.LoadFights());
+        });
+  }
+
+  protected toggleModal(): void {
+    this.isModalVisible = !this.isModalVisible;
   }
 }
