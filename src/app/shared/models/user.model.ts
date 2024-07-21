@@ -7,4 +7,5 @@ export interface User extends Omit<DBEntity, 'title'>{
     hits: number,
     hp: number,
     xp: number,
+    lastRevival: string,
 }

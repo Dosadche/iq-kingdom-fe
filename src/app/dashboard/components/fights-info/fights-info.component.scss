@@ -10,7 +10,7 @@ app-card {
     display: flex;
     flex-direction: column;
     gap: $medium 0;
-    max-height: calc(100vh - 226px - $big * 7);
+    max-height: calc(100vh - 274px - $big * 7);
     overflow-y: auto;
 
     &__item {

@@ -29,6 +29,10 @@ export class LayoutComponent implements OnInit {
     this.router.navigate(['auth/sign-in']);
   }
 
+  handleRevive(): void {
+    this.store.dispatch(new userActions.ReviveUser());
+  }
+
   private getUser(): void {
     const userId = this.storageService.getItem(StorageKeys.User).id;
     if (!userId) return;

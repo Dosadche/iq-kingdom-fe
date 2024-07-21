@@ -8,6 +8,7 @@ export enum UsersActionTypes {
     LOAD_USER = '[Users] Load user',
     LOAD_USER_SUCCESS = '[Users] Load user success',
     LOAD_USER_FAIL = '[Users] Load user fail',
+    REVIVE_USER = '[Users] Revive user',
 };
 
 export class LoadUsers implements Action {
@@ -39,5 +40,9 @@ export class LoadUserFail implements Action {
     constructor (public payload: string) {}
 }
 
-export type UserAction = LoadUsers | LoadUsersSuccess | LoadUsersFail | LoadUser | LoadUserSuccess | LoadUserFail;
+export class ReviveUser implements Action {
+    readonly type = UsersActionTypes.REVIVE_USER;
+}
+
+export type UserAction = LoadUsers | LoadUsersSuccess | LoadUsersFail | LoadUser | LoadUserSuccess | LoadUserFail | ReviveUser;
 

@@ -16,6 +16,11 @@ button {
     &:active {
         box-shadow: none;
     }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
 
 .simple-btn {
@@ -25,6 +30,11 @@ button {
 
 .primary-btn {
     background: $primary;
+    color: white;
+}
+
+.accent-btn {
+    background: $additionalDarker;
     color: white;
 }
 

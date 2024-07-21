@@ -4,6 +4,7 @@
             *ngIf="user | async as user"
             [user]="user"
             (onLogout)="handleLogout()"
+            (onRevive)="handleRevive()"
         ></app-user-info-card>
         <app-fights-info
         ></app-fights-info>

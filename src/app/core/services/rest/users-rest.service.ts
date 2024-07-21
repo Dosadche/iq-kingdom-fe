@@ -19,4 +19,8 @@ export class UsersRestService {
   getById(id: string): Observable<User> {
     return this.http.get<User>(`${this.entityUrl}/${id}`);
   }
+
+  revive(id: string): Observable<User> {
+    return this.http.put<User>(`${this.entityUrl}/revive/${id}`, {});
+  }
 }

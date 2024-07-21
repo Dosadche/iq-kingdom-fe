@@ -37,6 +37,12 @@
                     {{ user.xp }}
                 </p>
             </div>
+            <button 
+                [disabled]="!isRevivalAble"
+                (click)="handleRevivalClick()"
+                class="accent-btn info__renew-lives">
+                Renew Lives 
+            </button>
         </div>
         <p class="info__after-words">
             Keep on, {{ user.name }}, you are doing great!

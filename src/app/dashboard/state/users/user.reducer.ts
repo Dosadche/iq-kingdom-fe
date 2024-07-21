@@ -25,6 +25,7 @@ export const initialState: UsersState = {
 
 export function usersReducer(state = initialState, action: usersActions.UserAction): UsersState {
     switch (action.type) {
+        case usersActions.UsersActionTypes.REVIVE_USER:
         case usersActions.UsersActionTypes.LOAD_USER:
         case usersActions.UsersActionTypes.LOAD_USERS:
             return {
@@ -46,6 +47,12 @@ export function usersReducer(state = initialState, action: usersActions.UserActi
                 loading: false,
             };
         case usersActions.UsersActionTypes.LOAD_USER_FAIL:
+            return {
+                ...state,
+                loaded: false,
+                loading: false,
+                error: action.payload,
+            };
         case usersActions.UsersActionTypes.LOAD_USERS_FAIL:
             return {
                 ...state,

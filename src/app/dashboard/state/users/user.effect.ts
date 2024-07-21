@@ -43,4 +43,18 @@ export class UserEffect {
             })
         )
     });
+
+    reviveUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(userActions.UsersActionTypes.REVIVE_USER),
+            mergeMap((action: userActions.ReviveUser) => {
+                const userId = this.storageService.getItem(StorageKeys.User).id;
+                return this.usersRESTService.revive(userId).pipe(
+                    map((user: User) => new userActions.LoadUserSuccess({ user })),
+                    catchError((err) => {
+                        return of(new userActions.LoadUserFail(err.error.message))})
+                )
+            })
+        )
+    });
 }
