@@ -15,6 +15,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffect } from './state/users/user.effect';
 import { authReducer } from '../auth/state/auth.reducer';
 import { AuthEffect } from '../auth/state/auth.effect';
+import { questionReducer } from './state/questions/question.reducer';
+import { QuestionEffect } from './state/questions/question.effect';
+import { fightsReducer } from './state/fights/fight.reducer';
+import { FightEffect } from './state/fights/fight.effect';
 
 
 @NgModule({
@@ -34,6 +38,10 @@ import { AuthEffect } from '../auth/state/auth.effect';
     EffectsModule.forFeature(UserEffect),
     StoreModule.forFeature('auth', authReducer),
     EffectsModule.forFeature(AuthEffect),
+    StoreModule.forFeature('questions', questionReducer),
+    EffectsModule.forFeature(QuestionEffect),
+    StoreModule.forFeature('fights', fightsReducer),
+    EffectsModule.forFeature(FightEffect),
   ]
 })
 export class DashboardModule { }

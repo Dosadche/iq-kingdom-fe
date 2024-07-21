@@ -4,10 +4,10 @@
             header
             class="users__header">
             <h2>All Users</h2>
-            <div class="users__header__search-bar">
+            <!-- <div class="users__header__search-bar">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" placeholder="Search Users...">
-            </div>
+            </div> -->
         </div>
         <div class="users__table__container">
             <app-spinner *ngIf="isLoading | async; else usersContent"></app-spinner>
@@ -30,7 +30,7 @@
                             <td>{{ user.hp }} HP</td>
                             <td class="action-cell">
                                 <button 
-                                    (click)="fightModal.toggleModal()"
+                                    (click)="fightModal.startAttack(user.id)"
                                     class="primary-btn">Attack!</button>
                             </td>
                         </tr>

@@ -7,6 +7,7 @@ import * as authActions from '../../state/auth.action';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
 
 @UntilDestroy()
 @Component({
@@ -21,9 +22,11 @@ export class SignInComponent implements OnInit {
   constructor(private store: Store<fromAuth.AppState>,
               private router: Router,
               private fb: FormBuilder,
-              private errorService: ErrorService) { }
+              private errorService: ErrorService,
+              private storageService: StorageService) { }
 
   ngOnInit(): void {
+    this.removeUserFromStorage();
     this.initForm();
     this.subscribeOnStore();
   }
@@ -34,6 +37,10 @@ export class SignInComponent implements OnInit {
       return;
     }
     this.store.dispatch(new authActions.Login(this.signInForm.value));
+  }
+
+  private removeUserFromStorage(): void {
+    this.storageService.removeItem(StorageKeys.User);
   }
 
   private initForm(): void {

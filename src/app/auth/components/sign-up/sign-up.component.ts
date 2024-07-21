@@ -6,7 +6,7 @@ import { ErrorService } from 'src/app/shared/services/error.service'
 import * as fromAuth from '../../state/auth.reducer';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { User } from 'src/app/core/models/user.model';
+import { User } from 'src/app/shared/models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @UntilDestroy()
