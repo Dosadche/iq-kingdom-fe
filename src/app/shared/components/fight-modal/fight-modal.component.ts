@@ -3,10 +3,11 @@ import { select, Store } from '@ngrx/store';
 import * as fromQuestions from '../../../dashboard/state/questions/question.reducer';
 import * as questionsActions from '../../../dashboard/state/questions/question.action';
 import * as fightActions from '../../../dashboard/state/fights/fight.action';
+import * as notificationActions from '../../../dashboard/state/notifications/notification.action';
 import * as userActions from '../../../dashboard/state/users/user.action';
 import { Question } from '../../models/question.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { finalize, Observable, take } from 'rxjs';
+import { finalize, Observable, take, tap } from 'rxjs';
 import { FightsService } from 'src/app/core/services/fights.service';
 import { Fight } from '../../models/fight.model';
 import { FightsRestService } from 'src/app/core/services/rest/fights-rest.service';
@@ -28,6 +29,7 @@ export class ModalComponent implements OnInit {
   isFightLoading: boolean = false;
   defenderId?: string;
   fightId?: string;
+  private userId!: string;
 
   constructor(private store: Store<fromQuestions.AppState>,
               private fightsService: FightsService,
@@ -37,6 +39,7 @@ export class ModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userId = this.storageService.getItem(StorageKeys.User).id;
     this.subscribeOnStore();
   }
 
@@ -101,7 +104,13 @@ export class ModalComponent implements OnInit {
       request$ = this.fightsRESTService.attack(fight, this.defenderId);
     } else if (this.fightId) {
       const correctAnswersAmount = this.fightsService.countCorrectAnswers(this.questions);
-      request$ = this.fightsRESTService.defend(this.fightId, correctAnswersAmount);
+      request$ = this.fightsRESTService.defend(this.fightId, correctAnswersAmount)
+        .pipe(
+          tap(() => 
+              this.store.dispatch(new notificationActions.LoadNotifications({ 
+                userId: this.userId 
+              }))),
+        );
     } else {
       this.errorService.error = 'Something went wrong';
       return;
@@ -114,8 +123,7 @@ export class ModalComponent implements OnInit {
           this.isFightLoading = false;
           this.toggleModal();
         })).subscribe(() => {
-          const currentUserId = this.storageService.getItem(StorageKeys.User).id;
-          this.store.dispatch(new userActions.LoadUser({ id: currentUserId }));
+          this.store.dispatch(new userActions.LoadUser({ id: this.userId }));
           this.store.dispatch(new fightActions.LoadFights());
         });
   }

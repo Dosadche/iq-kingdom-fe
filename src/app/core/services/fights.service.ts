@@ -57,7 +57,7 @@ export class FightsService {
   }
 
   getFightImageSrc(fight: Fight): string {
-    if (fight.winnerId === this.userId || fight.winnerId === 'Draft') {
+    if (fight.winnerId === this.userId) {
       return './assets/images/sword.svg';
     } else {
       return './assets/images/shield.svg';

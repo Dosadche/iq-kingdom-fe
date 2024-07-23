@@ -16,8 +16,7 @@ export class UserInfoCardComponent {
     if (!this.user) return false;
     if (!this.user.lastRevival) return true;
     const timeSinceLastRevival = 
-      Math.abs(new Date().getMilliseconds() - new Date(this.user.lastRevival).getMilliseconds()) 
-        / (1000 * 60 * 60);
+      Math.abs(Number(new Date(this.user.lastRevival)) - Number(new Date())) / 36e5;
     return timeSinceLastRevival >= 24;
   }
 

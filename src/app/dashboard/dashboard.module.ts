@@ -19,6 +19,8 @@ import { questionReducer } from './state/questions/question.reducer';
 import { QuestionEffect } from './state/questions/question.effect';
 import { fightsReducer } from './state/fights/fight.reducer';
 import { FightEffect } from './state/fights/fight.effect';
+import { notificationReducer } from './state/notifications/notification.reducer';
+import { NotificationEffect } from './state/notifications/notification,effect';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { FightEffect } from './state/fights/fight.effect';
     EffectsModule.forFeature(QuestionEffect),
     StoreModule.forFeature('fights', fightsReducer),
     EffectsModule.forFeature(FightEffect),
+    StoreModule.forFeature('notifications', notificationReducer),
+    EffectsModule.forFeature(NotificationEffect),
   ]
 })
 export class DashboardModule { }

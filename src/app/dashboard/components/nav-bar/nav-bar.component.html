@@ -11,7 +11,12 @@
             <a
                 routerLinkActive="navigation__list__item--active"
                 routerLink="./notifications">
-                Notifications
+                Notifications 
+                <span 
+                    *ngIf="unreadNotificationsAmount"
+                    class="navigation__list__item__unread">
+                    {{ unreadNotificationsAmount | unread }}
+                </span>
             </a>
         </li>
     </ul>

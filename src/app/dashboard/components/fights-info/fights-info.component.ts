@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as fromFights from '../../state/fights/fight.reducer';
 import * as fightsActions from '../../state/fights/fight.action';
