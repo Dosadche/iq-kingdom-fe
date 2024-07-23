@@ -8,6 +8,7 @@ import { ModalComponent } from './components/fight-modal/fight-modal.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UnreadPipe } from './pipes/unread.pipe';
 
 const components = [
   CardComponent,
@@ -19,7 +20,8 @@ const components = [
 ]
 
 const pipes = [
-  TruncatePipe
+  TruncatePipe,
+  UnreadPipe
 ];
 
 @NgModule({

@@ -12,6 +12,22 @@
         &__item {
             font-weight: 500;
             font-size: $big;
+            position: relative;
+
+            &__unread {
+                color: white;
+                background-color: $primaryDarker;
+                height: $big;
+                width: $big;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: $medium;
+                border-radius: 50%;
+                position: absolute;
+                top: -4px;
+                right: -18px;
+            }
 
             &--active {
                 color: $primaryDarker;

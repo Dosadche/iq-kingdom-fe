@@ -11,6 +11,7 @@
     </div>
     <div class="layout__right">
         <app-nav-bar
+            [notifications]="notifications | async"
         ></app-nav-bar>
         <div class="layout__right__content">
             <router-outlet></router-outlet>

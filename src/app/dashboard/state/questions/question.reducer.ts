@@ -65,7 +65,7 @@ export const getQuestionsLoaded = createSelector(
     (state: QuestionsState) => state.loaded
 );
 
-export const getUsersFail = createSelector(
+export const getQuestionsFail = createSelector(
     getQuestionsFeatureState,
     (state: QuestionsState) => state.error
 );
