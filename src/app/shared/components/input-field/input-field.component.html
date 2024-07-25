@@ -1,14 +1,12 @@
-<form
-    [formGroup]="form"
-    class="input">
-    <label 
-        class="input__label"
-        for="input">
-        {{ label }}
-    </label>
-    <input 
-        [formControlName]="controlName"
-        class="input__control"
-        id="input" 
-        [type]="isPassword ? 'password' : 'text'">
+<form [formGroup]="form" class="input">
+  <label class="input__label" for="input">
+    {{ label }}
+  </label>
+  <input
+    [formControlName]="controlName"
+    class="input__control"
+    id="input"
+    [type]="isPassword ? 'password' : 'text'"
+  />
+  <p *ngIf="errorMessage" class="input__error">*{{ errorMessage }}</p>
 </form>
