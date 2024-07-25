@@ -25,12 +25,13 @@
                                     <span>{{ user.name }}</span>
                                 </div>
                             </td>
-                            <td>Expert</td>
+                            <td>{{ user.email }}</td>
                             <td>{{ user.xp }} XP</td>
                             <td>{{ user.hp }} HP</td>
                             <td class="action-cell">
                                 <button 
-                                    (click)="fightModal.startAttack(user.id)"
+                                    (click)="handleStartFight(user.id)"
+                                    [disabled]="user.hp === 0 || currentUser?.hp === 0"
                                     class="primary-btn">Attack!</button>
                             </td>
                         </tr>

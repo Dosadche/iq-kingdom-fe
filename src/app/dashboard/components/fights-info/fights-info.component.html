@@ -30,6 +30,9 @@
                 </p>
             </div>
         </li>
+        <span *ngIf="!fights.length">
+            You have no fights yet
+        </span>
     </ul>
 </app-card>
 <app-fight-modal #fightModal></app-fight-modal>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as authActions from '../../state/auth.action';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ErrorService } from 'src/app/shared/services/error.service'
 import * as fromAuth from '../../state/auth.reducer';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/shared/models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +22,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(private store: Store<fromAuth.AppState>,
               private formBuilder: FormBuilder,
-              private errorService: ErrorService,
+              private toasterService: ToasterService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -32,7 +33,10 @@ export class SignUpComponent implements OnInit {
 
   handleRegister(): void {
     if (this.registerForm.invalid) {
-      this.errorService.error = 'Please, ensure all fields are filled correctly';
+      this.toasterService.toaster = {
+        severity: ToasterSeverity.Error,
+        message: 'Please, ensure all fields are filled correctly',
+      };
       return;
     }
     this.store.dispatch(new authActions.Authenticate(this.registerForm.value));
@@ -58,6 +62,10 @@ export class SignUpComponent implements OnInit {
         untilDestroyed(this))
       .subscribe((user: User | null) => {
         if (user) {
+          this.toasterService.toaster = {
+            severity: ToasterSeverity.Success,
+            message: 'Registrated successfully',
+          }
           this.navigateToSignIn();
         }
       });

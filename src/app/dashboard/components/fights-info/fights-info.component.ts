@@ -8,6 +8,7 @@ import { FightsService } from 'src/app/core/services/fights.service';
 import { FightResults } from 'src/app/shared/enums/fight-results.enum';
 import { FightMessages } from 'src/app/shared/enums/fight-messages.enum';
 import { ModalComponent } from 'src/app/shared/components/fight-modal/fight-modal.component';
+import { ConfirmationService } from 'src/app/core/services/confirmation.service';
 
 @Component({
   selector: 'app-fights-info',
@@ -22,7 +23,8 @@ export class FightsInfoComponent implements OnInit {
   protected readonly FightMessages = FightMessages;
 
   constructor(private store: Store<fromFights.AppState>,
-              private fightsService: FightsService
+              private fightsService: FightsService,
+              private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,10 @@ export class FightsInfoComponent implements OnInit {
 
   handleFightClick(fight: Fight): void {
     if (this.getMessage(fight) === FightMessages.PendingDefence && fight.id) {
-      this.fightModal.startDefence(fight.id);
+      const approve = this.confirmationService.confirm('Are you sure you want to revenge this user?');
+      if (approve) {
+        this.fightModal.startDefence(fight.id);
+      }
     }
   }
 
