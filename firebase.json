@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/iq/kingdom-fe",
+    "public": "dist/iq-kingdom-fe",
     "ignore": [
       "firebase.json",
       "**/.*",

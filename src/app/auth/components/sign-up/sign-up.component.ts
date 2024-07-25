@@ -14,17 +14,19 @@ import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
   registerForm!: FormGroup;
   isLoading!: Observable<boolean>;
 
-  constructor(private store: Store<fromAuth.AppState>,
-              private formBuilder: FormBuilder,
-              private toasterService: ToasterService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private store: Store<fromAuth.AppState>,
+    private formBuilder: FormBuilder,
+    private toasterService: ToasterService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -55,17 +57,12 @@ export class SignUpComponent implements OnInit {
   }
 
   private subscribeOnStore(): void {
+    this.store.dispatch(new authActions.RemoveData());
     this.isLoading = this.store.pipe(select(fromAuth.getAuthLoading));
     this.store
-      .pipe(
-        select(fromAuth.getAuthUser),
-        untilDestroyed(this))
+      .pipe(select(fromAuth.getAuthUser), untilDestroyed(this))
       .subscribe((user: User | null) => {
         if (user) {
-          this.toasterService.toaster = {
-            severity: ToasterSeverity.Success,
-            message: 'Registrated successfully',
-          }
           this.navigateToSignIn();
         }
       });
