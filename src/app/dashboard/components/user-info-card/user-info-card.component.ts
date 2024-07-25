@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { ConfirmationService } from 'src/app/core/services/confirmation.service';
 import { User } from 'src/app/shared/models/user.model';
 
 @Component({
@@ -10,7 +11,7 @@ export class UserInfoCardComponent {
   @Output() onLogout = new EventEmitter<void>();
   @Output() onRevive = new EventEmitter<void>();
   @Input() user!: User | null;
-  constructor() { }
+  constructor(private confirmationService: ConfirmationService) { }
 
   get isRevivalAble(): boolean {
     if (!this.user) return false;
@@ -25,6 +26,9 @@ export class UserInfoCardComponent {
   }
 
   handleLogout(): void {
-    this.onLogout.emit();
+    const approve = this.confirmationService.confirm('Are you sure you want to logout?');
+    if (approve) {
+      this.onLogout.emit();
+    }
   }
 }

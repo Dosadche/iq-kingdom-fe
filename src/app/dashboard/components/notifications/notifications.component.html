@@ -1,9 +1,11 @@
 <app-card
     title="Notifications">
     <div class="notifications">
-        <ul class="notifications-list">
+        <ul 
+            *ngIf="notifications | async as notifications" 
+            class="notifications-list">
             <li 
-                *ngFor="let notification of notifications | async"
+                *ngFor="let notification of notifications"
                 [class.notifications-list__item--unread]="!notification.isRead"
                 class="notifications-list__item">
                 <span 
@@ -28,6 +30,9 @@
                     </p>
                 </div>
             </li>
+            <p *ngIf="!notifications?.length">
+                You have no notifications yet
+            </p>
         </ul>
     </div>
 </app-card>

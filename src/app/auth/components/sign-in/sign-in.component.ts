@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ErrorService } from 'src/app/shared/services/error.service';
 import * as fromAuth from '../../state/auth.reducer';
 import * as authActions from '../../state/auth.action';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
+import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +23,7 @@ export class SignInComponent implements OnInit {
   constructor(private store: Store<fromAuth.AppState>,
               private router: Router,
               private fb: FormBuilder,
-              private errorService: ErrorService,
+              private toasterService: ToasterService,
               private storageService: StorageService) { }
 
   ngOnInit(): void {
@@ -33,7 +34,10 @@ export class SignInComponent implements OnInit {
 
   handleLogin(): void {
     if (this.signInForm.invalid) {
-      this.errorService.error = 'Please ensure all fields are filled correctly';
+      this.toasterService.toaster = {
+        severity: ToasterSeverity.Error,
+        message: 'Please ensure all fields are filled correctly'
+      };
       return;
     }
     this.store.dispatch(new authActions.Login(this.signInForm.value));
@@ -58,6 +62,10 @@ export class SignInComponent implements OnInit {
         untilDestroyed(this))
       .subscribe((isSignedIn: boolean) => {
         if (isSignedIn) {
+          this.toasterService.toaster = {
+            severity: ToasterSeverity.Success,
+            message: 'Logged In Successfully',
+          }
           this.navigateToDashboard();
         }
       });

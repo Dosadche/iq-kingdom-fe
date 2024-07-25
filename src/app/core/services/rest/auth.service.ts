@@ -5,6 +5,11 @@ import { User } from '../../../shared/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+export interface JWTTokens {
+  accessToken: string,
+  refreshToken: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +28,11 @@ export class AuthRestService {
 
   logout(): Observable<void> {
     return this.http.delete<void>(`${this.entityUrl}/logout`);
+  }
+
+  refreshToken(refreshToken: string): Observable<JWTTokens> {
+    return this.http.post<JWTTokens>(`${this.entityUrl}/refresh-token`, {
+      refreshToken
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ErrorService } from '../../services/error.service';
+import { ToasterService } from '../../services/toaster.service';
 
 @Component({
   selector: 'app-toaster',
@@ -7,9 +7,9 @@ import { ErrorService } from '../../services/error.service';
   styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent {
-  constructor(public errorService: ErrorService) {}
+  constructor(public toasterService: ToasterService) {}
 
   removeError(): void {
-    this.errorService.removeError();
+    this.toasterService.removeToaster();
   }
 }

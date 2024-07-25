@@ -1,8 +1,9 @@
 <div 
-    *ngIf="errorService.error as errorMessage" 
+    *ngIf="toasterService.toaster as toaster" 
     (click)="removeError()"
-    class="toaster">
+    class="toaster"
+    [class]="'toaster--' + toaster.severity">
     <p class="toaster__message">
-        {{ errorMessage }}
+        {{ toaster.message }}
     </p>
 </div>

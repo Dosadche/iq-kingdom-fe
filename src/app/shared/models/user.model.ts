@@ -9,3 +9,8 @@ export interface User extends Omit<DBEntity, 'title'>{
     xp: number,
     lastRevival: string,
 }
+
+export interface CurrentUser extends User {
+    accessToken: string,
+    refreshToken: string,
+}

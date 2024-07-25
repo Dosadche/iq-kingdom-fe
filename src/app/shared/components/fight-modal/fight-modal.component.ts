@@ -11,8 +11,9 @@ import { finalize, Observable, take, tap } from 'rxjs';
 import { FightsService } from 'src/app/core/services/fights.service';
 import { Fight } from '../../models/fight.model';
 import { FightsRestService } from 'src/app/core/services/rest/fights-rest.service';
-import { ErrorService } from '../../services/error.service';
+import { ToasterService } from '../../services/toaster.service';
 import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
+import { ToasterSeverity } from '../../models/toaster-message.model';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +35,7 @@ export class ModalComponent implements OnInit {
   constructor(private store: Store<fromQuestions.AppState>,
               private fightsService: FightsService,
               private fightsRESTService: FightsRestService,
-              private errorService: ErrorService,
+              private toasterService: ToasterService,
               private storageService: StorageService,
   ) { }
 
@@ -101,18 +102,37 @@ export class ModalComponent implements OnInit {
   private endFight(fight: Fight): void {
     let request$: Observable<Fight>;
     if (this.defenderId) {
-      request$ = this.fightsRESTService.attack(fight, this.defenderId);
+      request$ = this.fightsRESTService.attack(fight, this.defenderId)
+        .pipe(
+          tap(() => this.toasterService.toaster = {
+            severity: ToasterSeverity.Success,
+            message: 'Your attack has been sent successfully',
+          }),
+        );
     } else if (this.fightId) {
       const correctAnswersAmount = this.fightsService.countCorrectAnswers(this.questions);
       request$ = this.fightsRESTService.defend(this.fightId, correctAnswersAmount)
         .pipe(
-          tap(() => 
-              this.store.dispatch(new notificationActions.LoadNotifications({ 
-                userId: this.userId 
-              }))),
+          tap((fight: Fight) => {
+            this.store.dispatch(new notificationActions.LoadNotifications({ 
+              userId: this.userId 
+            }));
+            const toasterMessage = fight.winnerId === this.userId ? 
+              'Congratulations! You won the battle!' :
+              fight.winnerId === 'Draft' ?
+              'Draft! You both were good.' :
+              'You lost the battle.';
+            this.toasterService.toaster = {
+              severity: ToasterSeverity.Success,
+              message: toasterMessage,
+            }
+          }),
         );
     } else {
-      this.errorService.error = 'Something went wrong';
+      this.toasterService.toaster = {
+        severity: ToasterSeverity.Error,
+        message: 'Something went wrong',
+      };
       return;
     }
     this.isFightLoading = true;

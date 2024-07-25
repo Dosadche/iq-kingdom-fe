@@ -1,7 +1,6 @@
 @import 'common';
 
 .toaster {
-    background: $error;
     z-index: 100;
     position: absolute;
     color: white;
@@ -11,6 +10,14 @@
     margin: $large;
     border-radius: $medium;
     cursor: pointer;
+
+    &--error {
+        background: $error;
+    }
+
+    &--success {
+        background: $additionalDarker;
+    }
 
     &__message {
         font-weight: 500;

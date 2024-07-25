@@ -10,6 +10,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { Observable } from 'rxjs';
 import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
 import { Notification } from 'src/app/shared/models/notification.model';
+import { ConfirmationService } from 'src/app/core/services/confirmation.service';
 
 @Component({
   selector: 'app-layout',
