@@ -39,6 +39,7 @@ export class SignUpComponent implements OnInit {
         severity: ToasterSeverity.Error,
         message: 'Please, ensure all fields are filled correctly',
       };
+      this.registerForm.markAllAsTouched();
       return;
     }
     this.store.dispatch(new authActions.Authenticate(this.registerForm.value));
