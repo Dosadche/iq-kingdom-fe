@@ -1,40 +1,26 @@
 <section class="sign-up">
-    <app-card
-        title="Register">
-        <form 
-            [formGroup]="registerForm"
-            class="sign-up__card">
-            <app-spinner *ngIf="isLoading | async; else form"></app-spinner>
-            <ng-template #form>
-                <app-input-field
-                    [form]="registerForm"
-                    controlName="name"
-                    label="Name"
-                ></app-input-field>
-                <app-input-field
-                    [form]="registerForm"
-                    controlName="email"
-                    label="Email"
-                ></app-input-field>
-                <app-input-field
-                    [isPassword]="true"
-                    [form]="registerForm"
-                    controlName="password"
-                    label="Password"
-                ></app-input-field>
-                <div class="sign-up__card__buttons">
-                    <button 
-                        (click)="navigateToSignIn()"
-                        class="simple-btn">
-                        Sign In
-                    </button>
-                    <button
-                        (click)="handleRegister()"
-                        class="primary-btn">
-                        Register
-                    </button>
-                </div>
-            </ng-template>
-        </form>
-    </app-card>
+  <app-card title="Register">
+    <form [formGroup]="registerForm" class="sign-up__card">
+      @if(isLoading()) {
+      <app-spinner />
+      } @else {
+      <app-input-field [form]="registerForm" controlName="name" label="Name" />
+      <app-input-field
+        [form]="registerForm"
+        controlName="email"
+        label="Email"
+      />
+      <app-input-field
+        [isPassword]="true"
+        [form]="registerForm"
+        controlName="password"
+        label="Password"
+      />
+      <div class="sign-up__card__buttons">
+        <button (click)="navigateToSignIn()" class="simple-btn">Sign In</button>
+        <button (click)="handleRegister()" class="primary-btn">Register</button>
+      </div>
+      }
+    </form>
+  </app-card>
 </section>

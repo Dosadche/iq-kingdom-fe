@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as fromAuth from '../../state/auth.reducer';
 import * as authActions from '../../state/auth.action';
-import { select, Store } from '@ngrx/store';
+import { select, Store, StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -12,20 +23,25 @@ import {
 } from 'src/app/core/services/storage.service';
 import { ToasterService } from 'src/app/shared/services/toaster.service';
 import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss'],
+  standalone: true,
+  imports: [SharedModule, ReactiveFormsModule],
 })
 export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
-  isLoading!: Observable<boolean>;
+  isLoading = toSignal(this.store.pipe(select(fromAuth.getAuthLoading)));
 
   constructor(
     private store: Store<fromAuth.AppState>,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private toasterService: ToasterService,
     private storageService: StorageService
@@ -49,6 +65,10 @@ export class SignInComponent implements OnInit {
     this.store.dispatch(new authActions.Login(this.signInForm.value));
   }
 
+  handleSignUp(): void {
+    this.router.navigate(['../sign-up'], { relativeTo: this.route });
+  }
+
   private removeUserFromStorage(): void {
     this.storageService.removeItem(StorageKeys.User);
   }
@@ -61,7 +81,6 @@ export class SignInComponent implements OnInit {
   }
 
   private subscribeOnStore(): void {
-    this.isLoading = this.store.pipe(select(fromAuth.getAuthLoading));
     this.store
       .pipe(select(fromAuth.getIsSignedIn), untilDestroyed(this))
       .subscribe((isSignedIn: boolean) => {

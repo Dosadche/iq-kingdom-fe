@@ -21,13 +21,13 @@ const routes: Routes = [
         path: '',
         redirectTo: 'users',
         pathMatch: 'full',
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

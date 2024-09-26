@@ -1,32 +1,27 @@
 <section class="sign-in">
-    <app-card title="Log In">
-            <div class="sign-in__card">
-                <app-spinner *ngIf="isLoading | async; else form"></app-spinner>
-                <ng-template #form>
-                    <app-input-field
-                        [form]="signInForm"
-                        controlName="email"
-                        label="Email"
-                    ></app-input-field>
-                    <app-input-field
-                        [isPassword]="true"
-                        [form]="signInForm"
-                        controlName="password"
-                        label="Password"
-                    ></app-input-field>
-                    <div class="sign-in__card__buttons">
-                        <button
-                            routerLink="../sign-up"
-                            class="simple-btn">
-                            Sign Up
-                        </button>
-                        <button 
-                            (click)="handleLogin()"
-                            class="primary-btn">
-                            Log In
-                        </button>
-                    </div>
-                </ng-template>
-            </div>
-    </app-card>
+  <app-card title="Log In">
+    <div class="sign-in__card">
+      @if (isLoading()) {
+      <app-spinner />
+      } @else {
+      <form [formGroup]="signInForm">
+        <app-input-field
+          [form]="signInForm"
+          controlName="email"
+          label="Email"
+        />
+        <app-input-field
+          [isPassword]="true"
+          [form]="signInForm"
+          controlName="password"
+          label="Password"
+        />
+      </form>
+      <div class="sign-in__card__buttons">
+        <button (click)="handleSignUp()" class="simple-btn">Sign Up</button>
+        <button (click)="handleLogin()" class="primary-btn">Log In</button>
+      </div>
+      }
+    </div>
+  </app-card>
 </section>
