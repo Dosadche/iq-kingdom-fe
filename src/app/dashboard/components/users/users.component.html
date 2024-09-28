@@ -1,44 +1,44 @@
 <app-card>
-    <div class="users">
-        <div 
-            header
-            class="users__header">
-            <h2>All Users</h2>
-            <!-- <div class="users__header__search-bar">
+  <div class="users">
+    <div header class="users__header">
+      <h2>All Users</h2>
+      <!-- <div class="users__header__search-bar">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" placeholder="Search Users...">
             </div> -->
-        </div>
-        <div class="users__table__container">
-            <app-spinner *ngIf="isLoading | async; else usersContent"></app-spinner>
-            <ng-template #usersContent>
-                <table 
-                    class="users__table">
-                    <tbody>
-                        <tr *ngFor="let user of users | async">
-                            <td class="user-cell">
-                                <div class="user-cell__container">
-                                    <app-user-logo
-                                        [name]="user.name"
-                                        color="blue"
-                                    ></app-user-logo>
-                                    <span>{{ user.name }}</span>
-                                </div>
-                            </td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.xp }} XP</td>
-                            <td>{{ user.hp }} HP</td>
-                            <td class="action-cell">
-                                <button 
-                                    (click)="handleStartFight(user.id)"
-                                    [disabled]="user.hp === 0 || currentUser?.hp === 0"
-                                    class="primary-btn">Attack!</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </ng-template>
-        </div>
     </div>
+    <div class="users__table__container">
+      @if (isLoading()) {
+      <app-spinner></app-spinner>
+      } @else {
+      <table class="users__table">
+        <tbody>
+          @for (user of users(); track user.id) {
+          <tr>
+            <td class="user-cell">
+              <div class="user-cell__container">
+                <app-user-logo [name]="user.name" color="blue" />
+                <span>{{ user.name }}</span>
+              </div>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.xp }} XP</td>
+            <td>{{ user.hp }} HP</td>
+            <td class="action-cell">
+              <button
+                (click)="handleStartFight(user.id)"
+                [disabled]="user.hp === 0 || currentUser?.hp === 0"
+                class="primary-btn"
+              >
+                Attack!
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+    </div>
+  </div>
 </app-card>
-<app-fight-modal #fightModal></app-fight-modal>
+<app-fight-modal #fightModal />

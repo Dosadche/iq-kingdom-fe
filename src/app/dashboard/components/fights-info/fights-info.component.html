@@ -1,38 +1,42 @@
-<app-card 
-    title="Your fights">
-    <ul     
-        *ngIf="fights | async as fights"
-        class="fights-list">
-        <li 
-            *ngFor="let fight of fights"
-            [ngClass]="{'fights-list__item--defendable': getMessage(fight) === FightMessages.PendingDefence}"
-            (click)="handleFightClick(fight)"
-            class="fights-list__item">
-            <span 
-                [ngClass]="{
-                    'fights-list__item__icon--defeat': getResult(fight) === FightResults.Defeat,
-                    'fights-list__item__icon--pending': 
-                        getResult(fight) === FightResults.Pending ||
-                        getResult(fight) === FightResults.Draft,
-                    'fights-list__item__icon--victory': getResult(fight) === FightResults.Victory,
-                }"
-                class="fights-list__item__icon">
-                <img 
-                    [src]="getImage(fight)" 
-                    alt="Fight Icon">
-            </span>
-            <div class="fights-list__item__content">
-                <p class="fights-list__item__content__title">
-                    {{ getResult(fight) }}
-                </p>
-                <p class="fights-list__item__content__text">
-                    {{ getMessage(fight) }}
-                </p>
-            </div>
-        </li>
-        <span *ngIf="!fights.length">
-            You have no fights yet
-        </span>
-    </ul>
+<app-card title="Your fights">
+  @if (fights() && !isLoading()) {
+  <ul class="fights-list">
+    @for (fight of fights(); track fight.id) {
+    <li
+      [ngClass]="{
+        'fights-list__item--defendable':
+          getMessage(fight) === FightMessages.PendingDefence
+      }"
+      (click)="handleFightClick(fight)"
+      class="fights-list__item"
+    >
+      <span
+        [ngClass]="{
+            'fights-list__item__icon--defeat': getResult(fight) === FightResults.Defeat,
+            'fights-list__item__icon--pending': 
+                getResult(fight) === FightResults.Pending ||
+                getResult(fight) === FightResults.Draft,
+            'fights-list__item__icon--victory': getResult(fight) === FightResults.Victory,
+        }"
+        class="fights-list__item__icon"
+      >
+        <img [src]="getImage(fight)" alt="Fight Icon" />
+      </span>
+      <div class="fights-list__item__content">
+        <p class="fights-list__item__content__title">
+          {{ getResult(fight) }}
+        </p>
+        <p class="fights-list__item__content__text">
+          {{ getMessage(fight) }}
+        </p>
+      </div>
+    </li>
+    } @if (!fights()?.length) {
+    <span> You have no fights yet </span>
+    }
+  </ul>
+  } @if (isLoading()) {
+  <app-spinner />
+  }
 </app-card>
-<app-fight-modal #fightModal></app-fight-modal>
+<app-fight-modal #fightModal />

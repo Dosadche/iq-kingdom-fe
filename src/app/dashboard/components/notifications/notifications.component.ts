@@ -7,36 +7,44 @@ import { select, Store } from '@ngrx/store';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { FightResults } from 'src/app/shared/enums/fight-results.enum';
 import { NotificationsRestService } from 'src/app/core/services/rest/notifications-rest.service';
-import { StorageKeys, StorageService } from 'src/app/core/services/storage.service';
+import {
+  StorageKeys,
+  StorageService,
+} from 'src/app/core/services/storage.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+  styleUrls: ['./notifications.component.scss'],
+  standalone: true,
+  imports: [SharedModule, NgClass],
 })
-export class NotificationsComponent implements OnInit {
-  isLoading!: Observable<boolean>;
-  notifications!: Observable<Notification[]>;
+export class NotificationsComponent {
+  isLoading = toSignal(
+    this.store.pipe(select(fromNotifications.getNotificationsLoading))
+  );
+  notifications = toSignal(
+    this.store.pipe(
+      select(fromNotifications.getNotifications),
+      tap((notifications: Notification[]) =>
+        this.readNotifications(notifications)
+      )
+    )
+  );
   protected readonly FightResults = FightResults;
 
-  constructor(private store: Store<fromNotifications.AppState>,
-              private notificationsService: NotificationsService,
-              private notificationsRESTService: NotificationsRestService,
-              private storageService: StorageService) { }
-
-  ngOnInit(): void {
-    this.subscribeOnStore();
-  }
+  constructor(
+    private store: Store<fromNotifications.AppState>,
+    private notificationsService: NotificationsService,
+    private notificationsRESTService: NotificationsRestService,
+    private storageService: StorageService
+  ) {}
 
   getNotificationImage(notification: Notification): string {
     return this.notificationsService.getNotificationImageSrc(notification);
-  }
-
-  private subscribeOnStore(): void {
-    this.notifications = this.store.pipe(
-      select(fromNotifications.getNotifications),
-      tap((notifications: Notification[]) => this.readNotifications(notifications)));
-    this.isLoading = this.store.pipe(select(fromNotifications.getNotificationsLoading));
   }
 
   private readNotifications(notifications: Notification[]): void {
@@ -45,11 +53,14 @@ export class NotificationsComponent implements OnInit {
       .map((notification: Notification) => notification.id);
     if (ids?.length) {
       setTimeout(() => {
-        this.notificationsRESTService.read(ids)
+        this.notificationsRESTService
+          .read(ids)
           .pipe(take(1))
           .subscribe(() => {
             const userId = this.storageService.getItem(StorageKeys.User).id;
-            this.store.dispatch(new notificationActions.LoadNotifications({ userId }));
+            this.store.dispatch(
+              new notificationActions.LoadNotifications({ userId })
+            );
           });
       }, 3000);
     }

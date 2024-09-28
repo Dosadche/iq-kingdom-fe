@@ -16,26 +16,14 @@ const components = [
   UserLogoComponent,
   ModalComponent,
   SpinnerComponent,
-  ToasterComponent
-]
-
-const pipes = [
-  TruncatePipe,
-  UnreadPipe
+  ToasterComponent,
 ];
 
+const pipes = [TruncatePipe];
+
 @NgModule({
-  declarations: [
-    ...components,
-    ...pipes,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    ...components,
-    ...pipes,
-  ]
+  declarations: [...components, ...pipes],
+  imports: [CommonModule, ReactiveFormsModule],
+  exports: [...components, ...pipes],
 })
-export class SharedModule { }
+export class SharedModule {}

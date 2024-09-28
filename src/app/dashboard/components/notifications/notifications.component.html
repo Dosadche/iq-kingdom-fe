@@ -1,38 +1,40 @@
-<app-card
-    title="Notifications">
-    <div class="notifications">
-        <ul 
-            *ngIf="notifications | async as notifications" 
-            class="notifications-list">
-            <li 
-                *ngFor="let notification of notifications"
-                [class.notifications-list__item--unread]="!notification.isRead"
-                class="notifications-list__item">
-                <span 
-                    [ngClass]="{
+<app-card title="Notifications">
+  <div class="notifications">
+    @if (notifications()) {
+    <ul class="notifications-list">
+      @for (notification of notifications(); track notification.id) {
+      <li
+        [class.notifications-list__item--unread]="!notification.isRead"
+        class="notifications-list__item"
+      >
+        <span
+          [ngClass]="{
                         'notifications-list__item__icon--defeat': (
                             notification.title === FightResults.Defeat ||
                             notification.title === FightResults.Draft
                         ),
                         'notifications-list__item__icon--victory': notification.title === FightResults.Victory,
                     }"
-                    class="notifications-list__item__icon notifications-list__item__icon--defeat">
-                    <img 
-                        [src]="getNotificationImage(notification)" 
-                        alt="Notification Icon">
-                </span>
-                <div class="notifications-list__item__content">
-                    <p class="notifications-list__item__content__title">
-                        {{ notification.title }}
-                    </p>
-                    <p class="notifications-list__item__content__text">
-                        {{ notification.content }}
-                    </p>
-                </div>
-            </li>
-            <p *ngIf="!notifications?.length">
-                You have no notifications yet
-            </p>
-        </ul>
-    </div>
+          class="notifications-list__item__icon notifications-list__item__icon--defeat"
+        >
+          <img
+            [src]="getNotificationImage(notification)"
+            alt="Notification Icon"
+          />
+        </span>
+        <div class="notifications-list__item__content">
+          <p class="notifications-list__item__content__title">
+            {{ notification.title }}
+          </p>
+          <p class="notifications-list__item__content__text">
+            {{ notification.content }}
+          </p>
+        </div>
+      </li>
+      } @if (!notifications()?.length) {
+      <p>You have no notifications yet</p>
+      }
+    </ul>
+    }
+  </div>
 </app-card>

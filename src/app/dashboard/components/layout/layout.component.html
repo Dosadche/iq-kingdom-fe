@@ -1,17 +1,18 @@
 <section class="layout">
   <div class="layout__left">
+    @if (user()) {
     <app-user-info-card
-      *ngIf="user | async as user"
-      [user]="user"
+      [user]="user()"
       (onLogout)="handleLogout()"
       (onRevive)="handleRevive()"
-    ></app-user-info-card>
-    <app-fights-info></app-fights-info>
+    />
+    }
+    <app-fights-info />
   </div>
   <div class="layout__right">
-    <app-nav-bar [notifications]="notifications | async"></app-nav-bar>
+    <app-nav-bar [notifications]="notifications()"></app-nav-bar>
     <div class="layout__right__content">
-      <router-outlet></router-outlet>
+      <router-outlet />
     </div>
   </div>
 </section>

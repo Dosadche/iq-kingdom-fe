@@ -1,67 +1,67 @@
-@import 'common';
+@import "common";
 
 .users {
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 $big;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 $big;
 
-        &__search-bar {
-            background: $background;
-            border: 2px solid white;
-            border-radius: $small;
-            box-shadow: $smallShadow;
-            padding: $small;
-            width: 300px;
-            display: flex;
-            gap: $small;
-            font-size: 18px;
-            align-items: center;
+    &__search-bar {
+      background: $background;
+      border: 2px solid white;
+      border-radius: $small;
+      box-shadow: $smallShadow;
+      padding: $small;
+      width: 300px;
+      display: flex;
+      gap: $small;
+      font-size: 18px;
+      align-items: center;
 
-            input {
-                width: 100%;
-            }
-        } 
-    }
-
-    &__table {
-        margin-top: $big;
+      input {
         width: 100%;
-        font-weight: 500;
-        font-size: 18px;
-        border-collapse: collapse;
-
-        &__container {
-            height: calc(100vh - 33px - $big * 7);
-            overflow-y: auto;
-        }
-
-        td {
-            border-bottom: 2px solid white;
-            padding: $small 0;
-        }
-
-        .user-cell {
-            padding-left: $big;
-            max-width: 300px;
-
-            &__container {
-                display: flex;
-                gap: $medium;
-                align-items: center;
-            }
-        }
-
-        .action-cell {
-            padding-right: $big;
-            width: 90px;
-        }
+      }
     }
+  }
+
+  &__table {
+    margin-top: $big;
+    width: 100%;
+    font-weight: 500;
+    font-size: 18px;
+    border-collapse: collapse;
+
+    &__container {
+      height: calc(100vh - 33px - $big * 7);
+      overflow-y: auto;
+    }
+
+    td {
+      border-bottom: 2px solid white;
+      padding: $small 0;
+    }
+
+    .user-cell {
+      padding-left: $big;
+      max-width: 300px;
+
+      &__container {
+        display: flex;
+        gap: $medium;
+        align-items: center;
+      }
+    }
+
+    .action-cell {
+      padding-right: $big;
+      width: 90px;
+    }
+  }
 }
 
 app-card {
-    ::ng-deep .card {
-        height: 100%;
-        padding: $big 0;
-    }
+  ::ng-deep .card {
+    height: 100%;
+    padding: $big 0;
+  }
 }

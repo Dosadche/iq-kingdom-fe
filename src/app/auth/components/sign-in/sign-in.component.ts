@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -14,8 +15,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromAuth from '../../state/auth.reducer';
 import * as authActions from '../../state/auth.action';
-import { select, Store, StoreModule } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   StorageKeys,
@@ -26,6 +26,11 @@ import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+type SignInForm = FormGroup<{
+  email: FormControl<string>,
+  password: FormControl<string>,
+}>;
+
 @UntilDestroy()
 @Component({
   selector: 'app-sign-in',
@@ -35,7 +40,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [SharedModule, ReactiveFormsModule],
 })
 export class SignInComponent implements OnInit {
-  signInForm!: FormGroup;
+  signInForm!: SignInForm;
   isLoading = toSignal(this.store.pipe(select(fromAuth.getAuthLoading)));
 
   constructor(
@@ -74,9 +79,9 @@ export class SignInComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.signInForm = this.fb.group({
-      email: [null, Validators.required],
-      password: [null, Validators.required],
+    this.signInForm = this.fb.nonNullable.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 

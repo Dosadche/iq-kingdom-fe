@@ -1,26 +1,22 @@
 <nav class="navigation">
-    <ul class="navigation__list">
-        <li class="navigation__list__item">
-            <a
-                routerLinkActive="navigation__list__item--active"
-                routerLink="./users">
-                Users
-            </a>
-        </li>
-        <li class="navigation__list__item">
-            <a
-                routerLinkActive="navigation__list__item--active"
-                routerLink="./notifications">
-                Notifications 
-                <span 
-                    *ngIf="unreadNotificationsAmount"
-                    class="navigation__list__item__unread">
-                    {{ unreadNotificationsAmount | unread }}
-                </span>
-            </a>
-        </li>
-    </ul>
-    <h2 class="navigation__logo">
-        IQKingdom
-    </h2>
+  <ul class="navigation__list">
+    <li class="navigation__list__item">
+      <a routerLinkActive="navigation__list__item--active" routerLink="./users">
+        Users
+      </a>
+    </li>
+    <li class="navigation__list__item">
+      <a
+        routerLinkActive="navigation__list__item--active"
+        routerLink="./notifications"
+      >
+        Notifications @if (unreadNotificationsAmount) {
+        <span class="navigation__list__item__unread">
+          {{ unreadNotificationsAmount | unread }}
+        </span>
+        }
+      </a>
+    </li>
+  </ul>
+  <h2 class="navigation__logo">IQKingdom</h2>
 </nav>

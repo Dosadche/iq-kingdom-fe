@@ -17,6 +17,12 @@ import { ToasterSeverity } from 'src/app/shared/models/toaster-message.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+type RegisterForm = FormGroup<{
+  name: FormControl<string>;
+  email: FormControl<string>;
+  password: FormControl<string>;
+}>;
+
 @UntilDestroy()
 @Component({
   selector: 'app-sign-up',
@@ -26,11 +32,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [SharedModule, ReactiveFormsModule],
 })
 export class SignUpComponent implements OnInit {
-  registerForm!: FormGroup<{
-    name: FormControl<string>;
-    email: FormControl<string>;
-    password: FormControl<string>;
-  }>;
+  registerForm!: RegisterForm;
   isLoading = toSignal(this.store.pipe(select(fromAuth.getAuthLoading)));
 
   constructor(

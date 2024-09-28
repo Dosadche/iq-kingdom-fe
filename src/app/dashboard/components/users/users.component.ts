@@ -7,22 +7,27 @@ import * as fromUsers from '../../state/users/user.reducer';
 import { Observable } from 'rxjs';
 import { ConfirmationService } from 'src/app/core/services/confirmation.service';
 import { ModalComponent } from 'src/app/shared/components/fight-modal/fight-modal.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  standalone: true,
+  imports: [SharedModule],
 })
 export class UsersComponent implements OnInit {
   @ViewChild('fightModal') fightModal!: ModalComponent;
-  users!: Observable<User[]>;
-  isLoading!: Observable<boolean>;
+  users = toSignal(this.store.pipe(select(fromUsers.getUsers)));
+  isLoading = toSignal(this.store.pipe(select(fromUsers.getUsersLoading)));
   currentUser!: User | null;
 
-  constructor(private store: Store<fromUsers.AppState>,
-              private confirmationService: ConfirmationService
-  ) { }
+  constructor(
+    private store: Store<fromUsers.AppState>,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();
@@ -30,7 +35,9 @@ export class UsersComponent implements OnInit {
   }
 
   handleStartFight(userId: string): void {
-    const approve = this.confirmationService.confirm('Do you realy want to attack this user?');
+    const approve = this.confirmationService.confirm(
+      'Do you realy want to attack this user?'
+    );
     if (approve) {
       this.fightModal.startAttack(userId);
     }
@@ -41,12 +48,8 @@ export class UsersComponent implements OnInit {
   }
 
   private subscribeOnStore(): void {
-    this.isLoading = this.store.pipe(select(fromUsers.getUsersLoading));
-    this.users = this.store.pipe(select(fromUsers.getUsers));
     this.store
-      .pipe(
-        select(fromUsers.getUser), 
-        untilDestroyed(this))
-      .subscribe((user: User | null) => this.currentUser = user);
+      .pipe(select(fromUsers.getUser), untilDestroyed(this))
+      .subscribe((user: User | null) => (this.currentUser = user));
   }
 }
